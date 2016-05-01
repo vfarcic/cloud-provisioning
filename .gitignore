@@ -1,0 +1,5 @@
+/.idea
+/*.iml
+.vagrant
+/packer/*.env
+/packer/packer_cache

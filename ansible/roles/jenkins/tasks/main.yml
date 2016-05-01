@@ -1,0 +1,14 @@
+- name: Volume is created
+  file:
+    path: "{{ home }}"
+    mode: 0777
+    state: directory
+
+- name: Container is running
+  docker:
+    name: jenkins
+    image: "jenkins:{{ jenkins_version }}"
+    ports: 8080:8080
+    volumes:
+      - "{{ home }}:/var/jenkins_home"
+    restart_policy: always
