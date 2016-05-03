@@ -3,3 +3,5 @@
 .vagrant
 /packer/*.env
 /packer/packer_cache
+secret-*
+*.tfstate.backup

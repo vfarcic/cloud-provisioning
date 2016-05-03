@@ -1,7 +1,7 @@
 {
   "variables": {
-    "aws_access_key": "",
-    "aws_secret_key": "",
+    "aws_access_key": "<YOUR ACCESS KEY ID>",
+    "aws_secret_key": "<YOUR SECRET ACCESS KEY>",
     "ami_id": "ami-7b386c11"
   },
   "builders": [{
@@ -10,8 +10,8 @@
     "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
     "source_ami": "{{user `ami_id`}}",
-    "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
+    "instance_type": "t1.micro",
     "ami_name": "too-simple-to-be-useful"
   }]
 }
