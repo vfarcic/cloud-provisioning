@@ -1,1 +1,3 @@
 debian_version: trusty
+#release: main
+release: experimental

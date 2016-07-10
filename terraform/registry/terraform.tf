@@ -6,7 +6,7 @@ provider "aws" {
 
 resource "aws_instance" "registry" {
   ami = "${var.ami_id}"
-  instance_type = "t1.micro"
+  instance_type = "m3.large"
   tags {
     Name = "registry"
   }

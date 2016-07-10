@@ -1,6 +1,6 @@
 - name: Docker repository is added and cache is updated
   apt_repository:
-    repo: deb https://apt.dockerproject.org/repo ubuntu-{{ debian_version }} main
+    repo: "deb https://apt.dockerproject.org/repo ubuntu-{{ debian_version }} {{ release }}"
     update_cache: yes
     state: present
   tags: [docker]

@@ -1,4 +1,7 @@
 - hosts: localhost
+  vars:
+    - project: proxy
   roles:
     - docker
     - docker-compose
+    - users
