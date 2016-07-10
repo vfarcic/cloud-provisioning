@@ -1,0 +1,21 @@
+- name: Create users
+  user:
+    name: "{{ user }}"
+    password: "{{ password }}"
+    shell: /bin/bash
+    group: docker
+    groups: sudo
+    append: yes
+
+- name: Allow password authentication
+  lineinfile:
+    dest: /etc/ssh/sshd_config
+    regexp: "PasswordAuthentication no"
+    line: "PasswordAuthentication yes"
+  register: authentication_result
+
+- name: SSH is restarted
+  service:
+    name: ssh
+    state: restarted
+  when: authentication_result|changed

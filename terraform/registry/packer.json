@@ -2,8 +2,7 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "ami_id": "",
-    "atlas_user": ""
+    "ami_id": "ami-7b386c11"
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -13,8 +12,8 @@
     "source_ami": "{{user `ami_id`}}",
     "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "jenkins",
-    "associate_public_ip_address": true
+    "ami_name": "registry",
+    "force_deregister": true
   }],
   "provisioners": [{
     "type": "shell",
@@ -28,7 +27,7 @@
     ]
   }, {
     "type": "ansible-local",
-    "playbook_file": "../ansible/docker.yml",
-    "playbook_dir": "../ansible"
+    "playbook_file": "../../ansible/registry.yml",
+    "playbook_dir": "../../ansible"
   }]
 }

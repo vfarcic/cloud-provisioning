@@ -1,8 +1,0 @@
-- name: Registry container is running
-  docker:
-    name: registry
-    image: registry:2
-    ports: 5000:5000
-    volumes:
-      - /data/registry:/var/lib/registry/docker/registry
-  tags: [registry]

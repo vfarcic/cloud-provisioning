@@ -13,13 +13,15 @@
   tags: [docker]
 
 - name: Debian python-pip is present
-  apt: name=python-pip state=present
+  apt:
+    name: python-pip
+    state: present
   tags: [docker]
 
 - name: Debian docker-py is present
   pip:
     name: docker-py
-    version: 1.6.0
+    version: 1.8.1
     state: present
   tags: [docker]
 

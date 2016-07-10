@@ -1,0 +1,15 @@
+- name: Directory is present
+  file:
+    path: "/data/composes/{{ project }}"
+    state: directory
+
+- name: Compose is present
+  copy:
+    src: "{{ project }}.yml"
+    dest: "/data/composes/{{ project }}/docker-compose.yml"
+
+- name: Containers are running
+  command: docker-compose up -d
+  args:
+    chdir: "/data/composes/{{ project }}"
+
