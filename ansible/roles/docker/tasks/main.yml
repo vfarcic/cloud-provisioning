@@ -3,45 +3,27 @@
     repo: "deb https://apt.dockerproject.org/repo ubuntu-{{ debian_version }} {{ release }}"
     update_cache: yes
     state: present
-  tags: [docker]
 
 - name: Debian Docker is present
   apt:
     name: docker-engine
     state: latest
     force: yes
-  tags: [docker]
-
-- name: Debian python-pip is present
-  apt:
-    name: python-pip
-    state: present
-  tags: [docker]
-
-- name: Debian docker-py is present
-  pip:
-    name: docker-py
-    version: 1.8.1
-    state: present
-  tags: [docker]
 
 - name: Debian files are present
   template:
     src: docker.cfg
     dest: /etc/default/docker
   register: copy_result
-  tags: [docker]
 
-- name: vagrant user is added to the docker group
+- name: User is added to the docker group
   user:
     name: ubuntu
     group: docker
   register: user_result
-  tags: [docker]
 
 - name: Debian Docker service is restarted
   service:
     name: docker
     state: restarted
   when: copy_result|changed or user_result|changed
-  tags: [docker]

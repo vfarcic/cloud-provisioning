@@ -4,3 +4,17 @@ variable "ami_id" {}
 variable "region" {
   default = "us-east-1"
 }
+variable "ssh_user" {}
+variable "ssh_pass" {}
+variable "swarm_secret" {
+  default = "my_secret"
+}
+variable "managers" {
+  default = "2"
+}
+variable "agents" {
+  default = "2"
+}
+variable "instance_type" {
+  default = "t1.micro"
+}

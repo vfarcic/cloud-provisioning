@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+
+  registry:
+    container_name: jenkins
+    image: jenkins:2.3
+    ports:
+      - 8080:8080
+    volumes:
+      - /data/jenkins:/var/jenkins_home
+    restart: always

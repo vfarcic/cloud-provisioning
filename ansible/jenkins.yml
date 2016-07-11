@@ -1,5 +1,11 @@
 - hosts: localhost
+  vars:
+    - project: jenkins
+    - container_volume: /data/jenkins
+    - container_volume_mode: "0777"
   roles:
     - docker
     - docker-compose
+    - containers
     - jenkins
+    - users

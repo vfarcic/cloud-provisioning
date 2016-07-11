@@ -3,6 +3,13 @@
     path: "/data/composes/{{ project }}"
     state: directory
 
+- name: Volume is present
+  file:
+    path: "{{ container_volume }}"
+    mode: "{{ container_volume_mode }}"
+    state: directory
+  when: container_volume is defined
+
 - name: Compose is present
   copy:
     src: "{{ project }}.yml"
