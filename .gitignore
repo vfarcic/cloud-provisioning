@@ -5,3 +5,6 @@
 /packer/packer_cache
 secret-*
 *.tfstate.backup
+*.pem
+*.log
+*.tfstate
