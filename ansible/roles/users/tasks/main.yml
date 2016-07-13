@@ -7,6 +7,9 @@
     groups: sudo
     append: yes
 
+- name: User is password-less sudoer
+  lineinfile: "dest=/etc/sudoers.d/90-cloud-init-users state=present regexp='^%{{ user }}' line='{{ user }} ALL=(ALL) NOPASSWD:ALL'"
+
 - name: Allow password authentication
   lineinfile:
     dest: /etc/ssh/sshd_config

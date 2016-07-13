@@ -7,7 +7,6 @@
 - name: Debian Docker is present
   apt:
     name: docker-engine
-    state: latest
     force: yes
 
 - name: Debian files are present

@@ -8,3 +8,4 @@ secret-*
 *.pem
 *.log
 *.tfstate
+*.retry

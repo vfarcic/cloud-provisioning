@@ -25,7 +25,7 @@ resource "aws_subnet" "default" {
   map_public_ip_on_launch = true
 }
 
-resource "aws_security_group" "registry" {
+resource "aws_security_group" "default" {
   name = "registry"
   description = "SSH and Internet traffic"
   vpc_id      = "${aws_vpc.default.id}"
@@ -33,6 +33,13 @@ resource "aws_security_group" "registry" {
   ingress {
     from_port = 22
     to_port = 22
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = 5000
+    to_port = 5000
     protocol = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
@@ -46,18 +53,29 @@ resource "aws_security_group" "registry" {
 
 }
 
-resource "aws_instance" "registry" {
-  count = "2"
+resource "aws_instance" "default" {
+  count = "${var.count}"
   ami = "${var.ami_id}"
   instance_type = "${var.instance_type}"
   tags {
     Name = "registry"
   }
   subnet_id = "${aws_subnet.default.id}"
-  vpc_security_group_ids = ["${aws_security_group.registry.id}", "${aws_vpc.default.default_security_group_id}"]
+  vpc_security_group_ids = ["${aws_security_group.default.id}", "${aws_vpc.default.default_security_group_id}"]
+  depends_on = ["aws_efs_mount_target.default"]
+  provisioner "remote-exec" {
+    connection {
+      user = "${var.ssh_user}"
+      password = "${var.ssh_pass}"
+    }
+    inline = [
+      "sudo mkdir -p /data/registry",
+      "sudo mount -t nfs4 -o nfsvers=4.1 $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).${aws_efs_file_system.default.id}.efs.${var.region}.amazonaws.com:/ /data/registry"
+    ]
+  }
 }
 
-resource "aws_efs_file_system" "devops" {
+resource "aws_efs_file_system" "default" {
   reference_name = "devops"
   tags {
     Name = "DevOps"
@@ -65,23 +83,14 @@ resource "aws_efs_file_system" "devops" {
 }
 
 resource "aws_efs_mount_target" "default" {
-  file_system_id = "${aws_efs_file_system.devops.id}"
+  file_system_id = "${aws_efs_file_system.default.id}"
   subnet_id = "${aws_subnet.default.id}"
-//  security_groups = ["${aws_security_group.default.id}"]
-}
-
-output "public_dns" {
-  value = "${aws_instance.registry.public_dns}"
 }
 
 output "public_ip" {
-  value = "${aws_instance.registry.public_ip}"
+  value = "${aws_instance.default.public_ip}"
 }
 
 output "private_ip" {
-  value = "${aws_instance.registry.private_ip}"
-}
-
-output "efs_id" {
-  value = "${aws_efs_file_system.devops.id}"
+  value = "${aws_instance.default.private_ip}"
 }

@@ -9,10 +9,10 @@ variable "ssh_pass" {}
 variable "swarm_secret" {
   default = "my_secret"
 }
-variable "managers" {
+variable "count_managers" {
   default = "2"
 }
-variable "agents" {
+variable "count_agents" {
   default = "2"
 }
 variable "instance_type" {

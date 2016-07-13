@@ -7,6 +7,14 @@ provider "aws" {
 resource "aws_instance" "swarm-init" {
   ami = "${var.ami_id}"
   instance_type = "${var.instance_type}"
+  tags {
+    Name = "docker-manager"
+  }
+  security_groups = [
+  "${aws_security_group.all.name}",
+  "${aws_security_group.ssh.name}",
+  "${aws_security_group.proxy.name}"
+  ]
   provisioner "remote-exec" {
     connection {
       user = "${var.ssh_user}"
@@ -16,19 +24,11 @@ resource "aws_instance" "swarm-init" {
       "docker swarm init --listen-addr ${aws_instance.swarm-init.private_ip}:2377 --secret ${var.swarm_secret} --auto-accept manager --auto-accept worker"
     ]
   }
-  tags {
-    Name = "docker-manager"
-  }
-  security_groups = [
-    "${aws_security_group.all.name}",
-    "${aws_security_group.ssh.name}",
-    "${aws_security_group.proxy.name}"
-  ]
 }
 
 resource "aws_instance" "swarm-manager" {
   ami = "${var.ami_id}"
-  count = "${var.managers}"
+  count = "${var.count_managers}"
   instance_type = "${var.instance_type}"
   provisioner "remote-exec" {
     connection {
@@ -51,7 +51,7 @@ resource "aws_instance" "swarm-manager" {
 
 resource "aws_instance" "swarm-agent" {
   ami = "${var.ami_id}"
-  count = "${var.agents}"
+  count = "${var.count_agents}"
   instance_type = "${var.instance_type}"
   provisioner "remote-exec" {
     connection {

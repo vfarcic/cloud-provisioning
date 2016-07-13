@@ -2,6 +2,7 @@
   vars:
     - project: registry
   roles:
+    - nfs
     - docker
     - docker-compose
     - containers
