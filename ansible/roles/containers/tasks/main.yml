@@ -19,4 +19,4 @@
   command: docker-compose up -d
   args:
     chdir: "/data/composes/{{ project }}"
-
+  when: not do_not_start_container is defined

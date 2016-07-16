@@ -12,7 +12,7 @@
     "source_ami": "{{user `ami_id`}}",
     "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "registry",
+    "ami_name": "jenkins",
     "force_deregister": true
   }],
   "provisioners": [{

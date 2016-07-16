@@ -1,8 +1,0 @@
-home: /data/jenkins
-jenkins_version: 2.3
-
-plugins:
-  - git
-  - workflow-aggregator
-  - workflow-multibranch
-  - docker-workflow

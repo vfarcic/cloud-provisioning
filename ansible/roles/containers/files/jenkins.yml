@@ -4,7 +4,7 @@ services:
 
   registry:
     container_name: jenkins
-    image: jenkins:2.3
+    image: jenkins:2.3-alpine
     ports:
       - 8080:8080
     volumes:

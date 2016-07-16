@@ -3,9 +3,10 @@
     - project: jenkins
     - container_volume: /data/jenkins
     - container_volume_mode: "0777"
+    - do_not_start_container: yes
   roles:
     - docker
     - docker-compose
     - containers
-    - jenkins
     - users
+    - nfs
