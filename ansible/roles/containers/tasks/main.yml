@@ -1,6 +1,6 @@
 - name: Directory is present
   file:
-    path: "/data/composes/{{ project }}"
+    path: "/composes/{{ project }}"
     state: directory
 
 - name: Volume is present
@@ -13,10 +13,15 @@
 - name: Compose is present
   copy:
     src: "{{ project }}.yml"
-    dest: "/data/composes/{{ project }}/docker-compose.yml"
+    dest: "/composes/{{ project }}/docker-compose.yml"
+
+- name: Containers are pulled
+  command: docker-compose pull
+  args:
+    chdir: "/composes/{{ project }}"
 
 - name: Containers are running
   command: docker-compose up -d
   args:
-    chdir: "/data/composes/{{ project }}"
+    chdir: "/composes/{{ project }}"
   when: not do_not_start_container is defined

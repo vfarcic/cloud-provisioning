@@ -1,0 +1,2 @@
+yum_packages:
+  - wget

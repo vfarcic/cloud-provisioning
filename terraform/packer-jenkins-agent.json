@@ -2,17 +2,17 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "ami_id": "ami-7b386c11"
+    "ami_id": "ami-86e0ffe7"
   },
   "builders": [{
     "type": "amazon-ebs",
     "access_key": "{{user `aws_access_key`}}",
     "secret_key": "{{user `aws_secret_key`}}",
-    "region": "us-east-1",
+    "region": "us-west-2",
     "source_ami": "{{user `ami_id`}}",
     "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "jenkins",
+    "ami_name": "jenkins-agent-devops",
     "force_deregister": true
   }],
   "provisioners": [{
@@ -27,7 +27,7 @@
     ]
   }, {
     "type": "ansible-local",
-    "playbook_file": "../../ansible/jenkins.yml",
-    "playbook_dir": "../../ansible"
+    "playbook_file": "../ansible/jenkins-agent.yml",
+    "playbook_dir": "../ansible"
   }]
 }

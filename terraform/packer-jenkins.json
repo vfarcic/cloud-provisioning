@@ -12,7 +12,7 @@
     "source_ami": "{{user `ami_id`}}",
     "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "docker-ubuntu",
+    "ami_name": "jenkins-devops",
     "force_deregister": true
   }],
   "provisioners": [{
@@ -27,7 +27,7 @@
     ]
   }, {
     "type": "ansible-local",
-    "playbook_file": "../../ansible/docker.yml",
-    "playbook_dir": "../../ansible"
+    "playbook_file": "../ansible/jenkins.yml",
+    "playbook_dir": "../ansible"
   }]
 }

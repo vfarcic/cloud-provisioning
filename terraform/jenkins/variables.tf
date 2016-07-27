@@ -4,7 +4,7 @@ variable "ami_id" {}
 variable "ssh_user" {}
 variable "ssh_pass" {}
 variable "region" {
-  default = "us-east-1"
+  default = "us-west-2"
 }
 variable "instance_type" {
   default = "t1.micro"

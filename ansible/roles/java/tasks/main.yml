@@ -1,0 +1,18 @@
+- name: Repository is added
+  apt_repository:
+    repo: ppa:webupd8team/java
+  register: repository_result
+
+- name: Repositories are updated
+  apt:
+    update_cache: yes
+  when: repository_result|changed
+
+- name: Accept licence
+  shell: echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true \
+    | sudo /usr/bin/debconf-set-selections
+  when: repository_result|changed
+
+- name: Package is installed
+  apt:
+    name: oracle-java8-installer

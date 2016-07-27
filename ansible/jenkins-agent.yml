@@ -1,0 +1,6 @@
+- hosts: localhost
+  roles:
+    - docker
+    - docker-compose
+    - users
+    - java
