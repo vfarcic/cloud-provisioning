@@ -1,9 +1,9 @@
 - hosts: localhost
   vars:
-    - project: registry
+    - project: elk
   roles:
-    - nfs
     - docker
     - docker-compose
+    - logstash
     - containers
-#    - users
+    - users

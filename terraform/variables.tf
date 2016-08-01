@@ -1,14 +1,9 @@
 variable "aws_access_key" {}
 variable "aws_secret_key" {}
-variable "ssh_user" {}
-variable "ssh_pass" {}
 variable "region" {
-  default = "us-west-2"
+  default = "us-east-1"
 }
 variable "jenkins_ami_id" {
-  default = "unknown"
-}
-variable "jenkins_agent_ami_id" {
   default = "unknown"
 }
 variable "jenkins" {
@@ -20,9 +15,46 @@ variable "jenkins" {
   }
 }
 
+variable "jenkins_agent_ami_id" {
+  default = "unknown"
+}
+
 variable "jenkins_agent" {
   default = {
     instance_type = "t1.micro"
     count         = "2"
+  }
+}
+
+variable "elk_ami_id" {
+  default = "unknown"
+}
+variable "elk" {
+  default = {
+    instance_type = "m3.medium"
+    count         = "1"
+  }
+}
+
+variable "registry_ami_id" {
+  default = "unknown"
+}
+variable "registry" {
+  default = {
+    instance_type = "t1.micro"
+    count         = 1
+  }
+}
+
+variable "swarm_ami_id" {
+  default = "unknown"
+}
+variable "swarm" {
+  default = {
+    instance_type  = "m1.medium"
+    count_managers = "2"
+    count_proxies  = "1"
+    count_workers  = "2"
+    count_tests  = "1"
   }
 }

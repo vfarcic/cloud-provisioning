@@ -2,7 +2,7 @@
   "variables": {
     "aws_access_key": "",
     "aws_secret_key": "",
-    "ami_id": "ami-7b386c11"
+    "ami_id": ""
   },
   "builders": [{
     "type": "amazon-ebs",
@@ -12,22 +12,12 @@
     "source_ami": "{{user `ami_id`}}",
     "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
-    "ami_name": "jenkins-agent-devops",
+    "ami_name": "elk-devops",
     "force_deregister": true
   }],
   "provisioners": [{
-    "type": "shell",
-    "inline": [
-      "sleep 30",
-      "sudo apt-get update",
-      "sudo apt-get install -y software-properties-common",
-      "sudo apt-add-repository ppa:ansible/ansible",
-      "sudo apt-get update",
-      "sudo apt-get install -y ansible"
-    ]
-  }, {
     "type": "ansible-local",
-    "playbook_file": "../ansible/jenkins-agent.yml",
+    "playbook_file": "../ansible/elk.yml",
     "playbook_dir": "../ansible"
   }]
 }

@@ -1,3 +1,2 @@
-debian_version: trusty
-#release: main
-release: experimental
+debian_version: xenial
+release: main

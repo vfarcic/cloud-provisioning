@@ -1,0 +1,9 @@
+- name: Directory is present
+  file:
+    path: /data/logstash/conf
+    state: directory
+
+- name: Config is present
+  copy:
+    src: syslog-collectd.conf
+    dest: /data/logstash/conf/syslog-collectd.conf

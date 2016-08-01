@@ -1,0 +1,5 @@
+- hosts: localhost
+  roles:
+    - docker
+    - docker-compose
+    - nfs

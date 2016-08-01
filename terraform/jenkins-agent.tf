@@ -13,8 +13,8 @@ resource "aws_instance" "jenkins_agent" {
   depends_on = ["aws_route.internet_access", "aws_instance.jenkins"]
   provisioner "remote-exec" {
     connection {
-      user = "${var.ssh_user}"
-      password = "${var.ssh_pass}"
+      user = "ubuntu"
+      private_key = "${file("devops.pem")}"
     }
     inline = [
       "nohup java -jar /var/lib/swarm-client-2.2-jar-with-dependencies.jar -master http://${aws_instance.jenkins.private_ip} -labels \"docker java ubuntu linux\" -username ${var.jenkins.admin_user} -password ${var.jenkins.admin_pass} >/tmp/jenkins_agent.log 2>&1 &"

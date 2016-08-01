@@ -2,7 +2,7 @@ variable "aws_access_key" {}
 variable "aws_secret_key" {}
 variable "ami_id" {}
 variable "region" {
-  default = "us-west-2"
+  default = "us-east-1"
 }
 variable "ssh_user" {}
 variable "ssh_pass" {}
