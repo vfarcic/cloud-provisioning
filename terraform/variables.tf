@@ -31,7 +31,7 @@ variable "elk_ami_id" {
 }
 variable "elk" {
   default = {
-    instance_type = "m3.medium"
+    instance_type = "m3.large"
     count         = "1"
   }
 }
@@ -41,7 +41,7 @@ variable "registry_ami_id" {
 }
 variable "registry" {
   default = {
-    instance_type = "t1.micro"
+    instance_type = "m3.large"
     count         = 1
   }
 }
@@ -51,10 +51,10 @@ variable "swarm_ami_id" {
 }
 variable "swarm" {
   default = {
-    instance_type  = "m1.medium"
+    instance_type  = "m3.large"
     count_managers = "2"
     count_proxies  = "1"
     count_workers  = "2"
-    count_tests  = "1"
+    count_test_workers  = "1"
   }
 }
