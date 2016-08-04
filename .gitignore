@@ -9,3 +9,4 @@ secret-*
 *.log
 *.tfstate
 *.retry
+/go-demo
