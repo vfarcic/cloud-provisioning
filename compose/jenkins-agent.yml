@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+
+  jenkins:
+    container_name: jenkins-agent
+    image: vfarcic/jenkins-swarm-agent
+    privileged: true
+    environment:
+      - COMMAND_OPTIONS=-master ${JENKINS_ADDRESS} -username ${USER} -password ${PASSWORD}
+    restart: always
