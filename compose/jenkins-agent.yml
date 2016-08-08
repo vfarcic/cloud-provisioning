@@ -2,10 +2,15 @@ version: '2'
 
 services:
 
-  jenkins:
+  jenkins-agent:
     container_name: jenkins-agent
     image: vfarcic/jenkins-swarm-agent
     privileged: true
     environment:
       - COMMAND_OPTIONS=-master ${JENKINS_ADDRESS} -username ${USER} -password ${PASSWORD}
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /workspace:/workspace
+      - $HOME/.docker/machine/machines:/machines
+    network_mode: host
     restart: always

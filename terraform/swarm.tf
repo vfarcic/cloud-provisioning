@@ -7,6 +7,7 @@ resource "aws_instance" "swarm-init" {
   subnet_id = "${aws_subnet.devops.id}"
   vpc_security_group_ids = [
     "${aws_security_group.ssh.id}",
+    "${aws_security_group.www.id}",
     "${aws_vpc.devops.default_security_group_id}"
   ]
   depends_on = [
@@ -29,7 +30,6 @@ resource "aws_instance" "swarm-init" {
       "sudo mount -t nfs4 -o nfsvers=4.1 $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).${aws_efs_file_system.devops.id}.efs.${var.region}.amazonaws.com:/ /data/",
       "sudo mkdir -p /data/swarm",
       "docker swarm init --advertise-addr ${aws_instance.swarm-init.private_ip} --listen-addr ${aws_instance.swarm-init.private_ip}:2377",
-      "docker node update --label-add environment=production $(docker node inspect -f \"{{.ID}}\" self)",
       "docker swarm join-token -q worker | sudo tee /data/swarm/worker.token",
       "docker swarm join-token -q manager | sudo tee /data/swarm/manager.token",
       "sudo chmod 0400 /data/swarm/*.token"
@@ -47,6 +47,7 @@ resource "aws_instance" "swarm-manager" {
   subnet_id = "${aws_subnet.devops.id}"
   vpc_security_group_ids = [
     "${aws_security_group.ssh.id}",
+    "${aws_security_group.www.id}",
     "${aws_vpc.devops.default_security_group_id}"
   ]
   depends_on = [
@@ -68,8 +69,7 @@ resource "aws_instance" "swarm-manager" {
       "sudo service docker restart",
       "sudo mkdir /data/",
       "sudo mount -t nfs4 -o nfsvers=4.1 $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).${aws_efs_file_system.devops.id}.efs.${var.region}.amazonaws.com:/ /data/",
-      "sudo docker swarm join --token $(sudo cat /data/swarm/manager.token) ${aws_instance.swarm-init.private_ip}:2377",
-      "docker node update --label-add environment=production $(docker node inspect -f \"{{.ID}}\" self)"
+      "sudo docker swarm join --token $(sudo cat /data/swarm/worker.token) ${aws_instance.swarm-init.private_ip}:2377",
     ]
   }
 }
@@ -84,6 +84,7 @@ resource "aws_instance" "swarm-worker" {
   subnet_id = "${aws_subnet.devops.id}"
   vpc_security_group_ids = [
     "${aws_security_group.ssh.id}",
+    "${aws_security_group.www.id}",
     "${aws_vpc.devops.default_security_group_id}"
   ]
   depends_on = [
@@ -105,9 +106,7 @@ resource "aws_instance" "swarm-worker" {
       "sudo service docker restart",
       "sudo mkdir /data/",
       "sudo mount -t nfs4 -o nfsvers=4.1 $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).${aws_efs_file_system.devops.id}.efs.${var.region}.amazonaws.com:/ /data/",
-      "sudo docker swarm join --token $(sudo cat /data/swarm/manager.token) ${aws_instance.swarm-init.private_ip}:2377",
-      "docker node update --label-add environment=production $(docker node inspect -f \"{{.ID}}\" self)",
-      "docker node demote $(docker node inspect -f \"{{.ID}}\" self)"
+      "sudo docker swarm join --token $(sudo cat /data/swarm/worker.token) ${aws_instance.swarm-init.private_ip}:2377",
     ]
   }
 }
@@ -121,6 +120,7 @@ resource "aws_instance" "swarm-test-init" {
   subnet_id = "${aws_subnet.devops.id}"
   vpc_security_group_ids = [
     "${aws_security_group.ssh.id}",
+    "${aws_security_group.www.id}",
     "${aws_vpc.devops.default_security_group_id}"
   ]
   depends_on = [
@@ -161,6 +161,7 @@ resource "aws_instance" "swarm-test-worker" {
   subnet_id = "${aws_subnet.devops.id}"
   vpc_security_group_ids = [
     "${aws_security_group.ssh.id}",
+    "${aws_security_group.www.id}",
     "${aws_vpc.devops.default_security_group_id}"
   ]
   depends_on = [
@@ -182,9 +183,7 @@ resource "aws_instance" "swarm-test-worker" {
       "sudo service docker restart",
       "sudo mkdir /data/",
       "sudo mount -t nfs4 -o nfsvers=4.1 $(curl -s http://169.254.169.254/latest/meta-data/placement/availability-zone).${aws_efs_file_system.devops.id}.efs.${var.region}.amazonaws.com:/ /data/",
-      "sudo docker swarm join --token $(sudo cat /data/swarm/test-manager.token) ${aws_instance.swarm-test-init.private_ip}:2377",
-      "docker node update --label-add environment=production $(docker node inspect -f \"{{.ID}}\" self)",
-      "docker node demote $(docker node inspect -f \"{{.ID}}\" self)"
+      "sudo docker swarm join --token $(sudo cat /data/swarm/test-worker.token) ${aws_instance.swarm-test-init.private_ip}:2377",
     ]
   }
 }
