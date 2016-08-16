@@ -8,7 +8,7 @@ services:
     network_mode: host
     environment:
       - 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}'
-    command: agent -server -bind=$HOST_IP -bootstrap-expect=1 -client=$HOST_IP
+    command: agent -server -bind=$HOST_IP -bootstrap-expect=1 -client=$HOST_IP -ui
 
   consul-agent:
     container_name: consul

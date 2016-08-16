@@ -11,3 +11,4 @@ secret-*
 *.retry
 /go-demo
 /docker
+/docker*.tgz

@@ -64,10 +64,10 @@ variable "swarm_ami_id" {
 }
 variable "swarm" {
   default = {
-    instance_type  = "m3.medium"
-    count_managers = "2"
-    count_proxies  = "1"
-    count_workers  = "2"
-    count_test_workers  = "1"
+    instance_type      = "t1.micro"
+    count_managers     = "2"
+    count_proxies      = "1"
+    count_workers      = "2"
+    count_test_workers = "1"
   }
 }
