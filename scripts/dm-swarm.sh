@@ -19,5 +19,3 @@ for i in 2 3; do
     --advertise-addr $(docker-machine ip swarm-$i) \
     $(docker-machine ip swarm-1):2377
 done
-
-eval $(docker-machine env swarm-1)
