@@ -7,21 +7,14 @@ Vagrant.configure(2) do |config|
   else
     config.vm.synced_folder ".", "/vagrant"
   end
-  config.vm.define "test" do |d|
-    d.vm.box = "ubuntu/trusty64"
-    d.vm.hostname = "test"
-    d.vm.network "private_network", ip: "10.100.198.200"
-    d.vm.provision :shell, path: "scripts/bootstrap_ansible.sh"
-    d.vm.provider "virtualbox" do |v|
-      v.memory = 1024
-    end
-  end
-  config.vm.define "rexray" do |d|
-    d.vm.box = "ubuntu/trusty64"
-    d.vm.hostname = "volume"
-    d.vm.network "private_network", ip: "10.100.198.201"
-    d.vm.provider "virtualbox" do |v|
-      v.memory = 1024
+  (1..3).each do |i|
+    config.vm.define "swarm-node-#{i}" do |d|
+      d.vm.box = "ubuntu/xenial64"
+      d.vm.hostname = "swarm-node-#{i}"
+      d.vm.network "private_network", ip: "10.100.192.20#{i}"
+      d.vm.provider "virtualbox" do |v|
+        v.memory = 1024
+      end
     end
   end
   if Vagrant.has_plugin?("vagrant-cachier")
