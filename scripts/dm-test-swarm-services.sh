@@ -6,22 +6,78 @@ docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
 
+curl -o docker-compose-proxy.yml \
+    https://raw.githubusercontent.com/\
+vfarcic/docker-flow-proxy/master/docker-compose.yml
+
+export DOCKER_IP=$(docker-machine ip swarm-test-1)
+
+docker-compose -f docker-compose-proxy.yml \
+    up -d consul-server
+
+export CONSUL_SERVER_IP=$(docker-machine ip swarm-1)
+
+for i in 2 3; do
+    eval $(docker-machine env swarm-test-$i)
+
+    export DOCKER_IP=$(docker-machine ip swarm-test-$i)
+
+    docker-compose -f docker-compose-proxy.yml \
+        up -d consul-agent
+done
+
 docker service create --name proxy \
     -p 80:80 \
     -p 443:443 \
     -p 8080:8080 \
     --network proxy \
     -e MODE=swarm \
-    --replicas 3 \
-    -e CONSUL_ADDRESS="$(docker-machine ip swarm-1):8500,$(docker-machine ip swarm-3):8500,$(docker-machine ip swarm-3):8500" \
-    vfarcic/docker-flow-proxy
+    --replicas 2 \
+    -e CONSUL_ADDRESS="$(docker-machine ip swarm-test-1):8500,$(docker-machine ip swarm-test-2):8500,$(docker-machine ip swarm-3):8500" \
+    --constraint 'node.labels.env == prod-like' \
+    vfarcic/docker-flow-proxy:1.0
 
 docker service create --name go-demo-db \
     --network go-demo \
+    --constraint 'node.labels.env == prod-like' \
     mongo
 
 docker service create --name go-demo \
     -e DB=go-demo-db \
     --network go-demo \
     --network proxy \
+    --replicas 2 \
+    --constraint 'node.labels.env == prod-like' \
     vfarcic/go-demo
+
+while true; do
+    REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
+    if [[ $REPLICAS == "2/2" ]]; then
+        break
+    else
+        echo "Waiting for the proxy service..."
+        sleep 5
+    fi
+done
+
+while true; do
+    REPLICAS=$(docker service ls | grep go-demo-db | awk '{print $3}')
+    if [[ $REPLICAS == "1/1" ]]; then
+        break
+    else
+        echo "Waiting for the go-demo-db service..."
+        sleep 5
+    fi
+done
+
+while true; do
+    REPLICAS=$(docker service ls | grep vfarcic/go-demo | awk '{print $3}')
+    if [[ $REPLICAS == "2/2" ]]; then
+        break
+    else
+        echo "Waiting for the go-demo-db service..."
+        sleep 5
+    fi
+done
+
+curl "$(docker-machine ip swarm-test-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080"
