@@ -26,6 +26,8 @@ for i in 2 3; do
         up -d consul-agent
 done
 
+rm docker-compose-proxy.yml
+
 docker service create --name proxy \
     -p 80:80 \
     -p 443:443 \
@@ -35,12 +37,12 @@ docker service create --name proxy \
     --replicas 2 \
     -e CONSUL_ADDRESS="$(docker-machine ip swarm-test-1):8500,$(docker-machine ip swarm-test-2):8500,$(docker-machine ip swarm-3):8500" \
     --constraint 'node.labels.env == prod-like' \
-    vfarcic/docker-flow-proxy:1.0
+    vfarcic/docker-flow-proxy:1.89
 
 docker service create --name go-demo-db \
     --network go-demo \
     --constraint 'node.labels.env == prod-like' \
-    mongo
+    mongo:3.3.12
 
 docker service create --name go-demo \
     -e DB=go-demo-db \
@@ -48,7 +50,7 @@ docker service create --name go-demo \
     --network proxy \
     --replicas 2 \
     --constraint 'node.labels.env == prod-like' \
-    vfarcic/go-demo
+    vfarcic/go-demo:1.0
 
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
