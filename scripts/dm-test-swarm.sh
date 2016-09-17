@@ -19,3 +19,5 @@ for i in 2 3; do
         --advertise-addr $(docker-machine ip swarm-test-$i) \
         $(docker-machine ip swarm-test-1):2377
 done
+
+echo ">> The swarm test cluster is up and running"
