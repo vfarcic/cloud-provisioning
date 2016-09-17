@@ -84,4 +84,5 @@ done
 
 curl "$(docker-machine ip swarm-test-1):8090/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
 
+echo ""
 echo ">> The services are up and running inside the swarm test cluster"
