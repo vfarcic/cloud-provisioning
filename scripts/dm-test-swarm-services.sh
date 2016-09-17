@@ -58,7 +58,7 @@ while true; do
         break
     else
         echo "Waiting for the proxy service..."
-        sleep 5
+        sleep 10
     fi
 done
 
@@ -68,7 +68,7 @@ while true; do
         break
     else
         echo "Waiting for the go-demo-db service..."
-        sleep 5
+        sleep 10
     fi
 done
 
@@ -78,7 +78,7 @@ while true; do
         break
     else
         echo "Waiting for the go-demo-db service..."
-        sleep 5
+        sleep 10
     fi
 done
 
