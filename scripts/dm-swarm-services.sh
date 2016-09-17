@@ -31,7 +31,7 @@ rm docker-compose-proxy.yml
 docker service create --name proxy \
     -p 80:80 \
     -p 443:443 \
-    -p 8080:8080 \
+    -p 8090:8080 \
     --network proxy \
     -e MODE=swarm \
     --replicas 3 \
@@ -82,6 +82,6 @@ while true; do
     fi
 done
 
-curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
+curl "$(docker-machine ip swarm-1):8090/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
 
 echo ">> The services are up and running inside the swarm cluster"
