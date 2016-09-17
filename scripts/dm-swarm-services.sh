@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-eval $(docker-machine env swarm-test-1)
+eval $(docker-machine env swarm-1)
 
 docker network create --driver overlay proxy
 
@@ -10,7 +10,7 @@ curl -o docker-compose-proxy.yml \
     https://raw.githubusercontent.com/\
 vfarcic/docker-flow-proxy/master/docker-compose.yml
 
-export DOCKER_IP=$(docker-machine ip swarm-test-1)
+export DOCKER_IP=$(docker-machine ip swarm-1)
 
 docker-compose -f docker-compose-proxy.yml \
     up -d consul-server
@@ -18,9 +18,9 @@ docker-compose -f docker-compose-proxy.yml \
 export CONSUL_SERVER_IP=$(docker-machine ip swarm-1)
 
 for i in 2 3; do
-    eval $(docker-machine env swarm-test-$i)
+    eval $(docker-machine env swarm-$i)
 
-    export DOCKER_IP=$(docker-machine ip swarm-test-$i)
+    export DOCKER_IP=$(docker-machine ip swarm-$i)
 
     docker-compose -f docker-compose-proxy.yml \
         up -d consul-agent
@@ -34,22 +34,22 @@ docker service create --name proxy \
     -p 8080:8080 \
     --network proxy \
     -e MODE=swarm \
-    --replicas 2 \
-    -e CONSUL_ADDRESS="$(docker-machine ip swarm-test-1):8500,$(docker-machine ip swarm-test-2):8500,$(docker-machine ip swarm-test-3):8500" \
-    --constraint 'node.labels.env == prod-like' \
+    --replicas 3 \
+    -e CONSUL_ADDRESS="$(docker-machine ip swarm-1):8500,$(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500" \
+    --reserve-memory 50m \
     vfarcic/docker-flow-proxy:1.89
 
 docker service create --name go-demo-db \
     --network go-demo \
-    --constraint 'node.labels.env == prod-like' \
+    --reserve-memory 150m \
     mongo:3.3.12
 
 docker service create --name go-demo \
     -e DB=go-demo-db \
     --network go-demo \
     --network proxy \
-    --replicas 2 \
-    --constraint 'node.labels.env == prod-like' \
+    --replicas 3 \
+    --reserve-memory 50m \
     vfarcic/go-demo:1.0
 
 while true; do
@@ -74,7 +74,7 @@ done
 
 while true; do
     REPLICAS=$(docker service ls | grep vfarcic/go-demo | awk '{print $3}')
-    if [[ $REPLICAS == "2/2" ]]; then
+    if [[ $REPLICAS == "3/3" ]]; then
         break
     else
         echo "Waiting for the go-demo-db service..."
@@ -82,4 +82,4 @@ while true; do
     fi
 done
 
-curl "$(docker-machine ip swarm-test-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
+curl "$(docker-machine ip swarm-1):8080/v1/docker-flow-proxy/reconfigure?serviceName=go-demo&servicePath=/demo&port=8080&distribute=true"
