@@ -54,7 +54,7 @@ docker service create --name go-demo \
 
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
-    if [[ $REPLICAS == "2/2" ]]; then
+    if [[ $REPLICAS == "3/3" ]]; then
         break
     else
         echo "Waiting for the proxy service..."
