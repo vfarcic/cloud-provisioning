@@ -50,6 +50,7 @@ docker service create --name go-demo \
     --network proxy \
     --replicas 3 \
     --reserve-memory 50m \
+    --update-delay 5s \
     vfarcic/go-demo:1.0
 
 while true; do
