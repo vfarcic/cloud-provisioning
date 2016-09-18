@@ -37,7 +37,7 @@ docker service create --name proxy \
     --replicas 3 \
     -e CONSUL_ADDRESS="$(docker-machine ip swarm-1):8500,$(docker-machine ip swarm-2):8500,$(docker-machine ip swarm-3):8500" \
     --reserve-memory 50m \
-    vfarcic/docker-flow-proxy:1.89
+    vfarcic/docker-flow-proxy:1.90
 
 docker service create --name go-demo-db \
     --network go-demo \
