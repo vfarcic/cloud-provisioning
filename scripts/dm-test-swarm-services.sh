@@ -44,15 +44,6 @@ docker service create --name go-demo-db \
     --constraint 'node.labels.env == prod-like' \
     mongo:3.3.12
 
-docker service create --name go-demo \
-    -e DB=go-demo-db \
-    --network go-demo \
-    --network proxy \
-    --replicas 2 \
-    --constraint 'node.labels.env == prod-like' \
-    --update-delay 5s \
-    vfarcic/go-demo:1.0
-
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
     if [[ $REPLICAS == "2/2" ]]; then
@@ -72,6 +63,15 @@ while true; do
         sleep 10
     fi
 done
+
+docker service create --name go-demo \
+    -e DB=go-demo-db \
+    --network go-demo \
+    --network proxy \
+    --replicas 2 \
+    --constraint 'node.labels.env == prod-like' \
+    --update-delay 5s \
+    vfarcic/go-demo:1.0
 
 while true; do
     REPLICAS=$(docker service ls | grep vfarcic/go-demo | awk '{print $3}')

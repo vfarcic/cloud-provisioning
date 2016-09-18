@@ -44,15 +44,6 @@ docker service create --name go-demo-db \
     --reserve-memory 150m \
     mongo:3.3.12
 
-docker service create --name go-demo \
-    -e DB=go-demo-db \
-    --network go-demo \
-    --network proxy \
-    --replicas 3 \
-    --reserve-memory 50m \
-    --update-delay 5s \
-    vfarcic/go-demo:1.0
-
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
     if [[ $REPLICAS == "3/3" ]]; then
@@ -72,6 +63,15 @@ while true; do
         sleep 10
     fi
 done
+
+docker service create --name go-demo \
+    -e DB=go-demo-db \
+    --network go-demo \
+    --network proxy \
+    --replicas 3 \
+    --reserve-memory 50m \
+    --update-delay 5s \
+    vfarcic/go-demo:1.0
 
 while true; do
     REPLICAS=$(docker service ls | grep vfarcic/go-demo | awk '{print $3}')
