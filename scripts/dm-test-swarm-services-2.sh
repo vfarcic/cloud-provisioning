@@ -76,7 +76,7 @@ docker service create --name go-demo \
     --network proxy \
     --replicas 2 \
     --constraint 'node.labels.env == prod-like' \
-    --update-delay 5s \
+    --update-delay 1s \
     vfarcic/go-demo:1.0
 
 while true; do
