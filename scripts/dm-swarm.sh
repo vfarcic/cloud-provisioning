@@ -20,4 +20,12 @@ for i in 2 3; do
     $(docker-machine ip swarm-1):2377
 done
 
+for i in 1 2 3; do
+    eval $(docker-machine env swarm-test-$i)
+
+    docker node update \
+        --label-add env=prod-like \
+        swarm-$i
+done
+
 echo ">> The swarm cluster is up and running"
