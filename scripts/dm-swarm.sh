@@ -21,7 +21,7 @@ for i in 2 3; do
 done
 
 for i in 1 2 3; do
-    eval $(docker-machine env swarm-test-$i)
+    eval $(docker-machine env swarm-$i)
 
     docker node update \
         --label-add env=prod-like \
