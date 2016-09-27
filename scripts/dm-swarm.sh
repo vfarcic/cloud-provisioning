@@ -24,7 +24,8 @@ for i in 1 2 3; do
     eval $(docker-machine env swarm-$i)
 
     docker node update \
-        --label-add env=prod-like \
+        --label-add env=prod \
+        --label-add type=manager \
         swarm-$i
 done
 
