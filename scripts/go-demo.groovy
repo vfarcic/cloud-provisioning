@@ -46,7 +46,6 @@ node("docker") {
           sh "docker-compose run --rm production"
         }
       }
-
     }
 
     stage("Production") {
