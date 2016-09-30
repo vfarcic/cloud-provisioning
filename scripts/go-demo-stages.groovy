@@ -1,21 +1,21 @@
 node("docker") {
 
-    stage("Pull") {
-    }
+  stage("Pull") {
+  }
 
-    stage("Unit") {
-    }
+  stage("Unit") {
+  }
 
-    stage("Staging") {
-    }
+  stage("Staging") {
+  }
 
-    stage("Publish") {
-    }
+  stage("Publish") {
+  }
 
-    stage("Prod-like") {
-    }
+  stage("Prod-like") {
+  }
 
-    stage("Production") {
-    }
+  stage("Production") {
+  }
 
 }
