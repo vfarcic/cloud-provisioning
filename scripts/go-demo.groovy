@@ -1,12 +1,12 @@
 node("docker") {
 
+  stage("Pull") {
+    git "https://github.com/vfarcic/go-demo.git"
+  }
+
   withEnv([
     "COMPOSE_FILE=docker-compose-test-local.yml"
   ]) {
-
-    stage("Pull") {
-      git "https://github.com/vfarcic/go-demo.git"
-    }
 
     stage("Unit") {
       sh "docker-compose run --rm unit"
