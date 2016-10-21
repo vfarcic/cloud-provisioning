@@ -27,7 +27,6 @@ for i in 1 2 3; do
 
     docker node update \
         --label-add env=prod \
-        --label-add type=manager \
         swarm-$i
 done
 
