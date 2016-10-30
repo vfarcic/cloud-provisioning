@@ -57,7 +57,7 @@ docker service create --name proxy \
     --network proxy \
     -e MODE=swarm \
     -e LISTENER_ADDRESS=swarm-listener \
-    vfarcic/docker-flow-proxy
+    vfarcic/docker-flow-proxy:1.96
 
 while true; do
     REPLICAS=$(docker service ls | grep swarm-listener | awk '{print $3}')

@@ -43,7 +43,7 @@ docker service create --name proxy \
     --replicas 2 \
     -e CONSUL_ADDRESS="$(docker-machine ip swarm-test-1):8500,$(docker-machine ip swarm-test-2):8500,$(docker-machine ip swarm-test-3):8500" \
     --constraint 'node.labels.env == prod-like' \
-    vfarcic/docker-flow-proxy:1.90
+    vfarcic/docker-flow-proxy:1.96
 
 docker service create --name go-demo-db \
     --network go-demo \
