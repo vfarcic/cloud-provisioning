@@ -22,7 +22,7 @@ docker service create --name swarm-listener \
 
 docker service create --name go-demo-db \
     --network go-demo \
-    mongo
+    mongo:3.2.10
 
 docker service create --name go-demo \
     -e DB=go-demo-db \
@@ -33,7 +33,7 @@ docker service create --name go-demo \
     --label com.df.distribute=true \
     --label com.df.servicePath=/demo \
     --label com.df.port=8080 \
-    vfarcic/go-demo
+    vfarcic/go-demo:1.2
 
 echo ""
 echo ">> The services scheduled and will be up-and-running soon"

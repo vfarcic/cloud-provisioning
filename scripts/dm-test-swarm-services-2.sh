@@ -48,7 +48,7 @@ docker service create --name proxy \
 docker service create --name go-demo-db \
     --network go-demo \
     --constraint 'node.labels.env == prod-like' \
-    mongo:3.3.12
+    mongo:3.2.10
 
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
