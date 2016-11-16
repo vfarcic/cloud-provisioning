@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
 
 for i in 1 2 3; do
-    docker-machine create \
-        -d virtualbox \
-        swarm-$i
+    docker-machine create -d virtualbox swarm-$i
 done
 
 eval $(docker-machine env swarm-1)
