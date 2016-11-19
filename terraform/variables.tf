@@ -1,5 +1,9 @@
-variable "aws_access_key" {}
-variable "aws_secret_key" {}
+variable "aws_access_key" {
+  default = ""
+}
+variable "aws_secret_key" {
+  default = ""
+}
 variable "region" {
   default = "us-east-1"
 }
@@ -13,49 +17,6 @@ variable "base_ami_id" {
 variable "base" {
   default = {
     instance_type = "t1.micro"
-  }
-}
-
-variable "jenkins_ami_id" {
-  default = "unknown"
-}
-variable "jenkins" {
-  default = {
-    instance_type = "m3.medium"
-    count         = "1"
-    admin_user    = "admin"
-    admin_pass    = "admin"
-  }
-}
-
-variable "jenkins_agent_ami_id" {
-  default = "unknown"
-}
-
-variable "jenkins_agent" {
-  default = {
-    instance_type = "t1.micro"
-    count         = "2"
-  }
-}
-
-variable "elk_ami_id" {
-  default = "unknown"
-}
-variable "elk" {
-  default = {
-    instance_type = "m3.medium"
-    count         = "1"
-  }
-}
-
-variable "registry_ami_id" {
-  default = "unknown"
-}
-variable "registry" {
-  default = {
-    instance_type = "t1.micro"
-    count         = 1
   }
 }
 

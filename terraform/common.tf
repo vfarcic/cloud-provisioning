@@ -77,7 +77,7 @@ resource "aws_security_group" "www" {
 
 
 resource "aws_efs_file_system" "devops" {
-  reference_name = "devops"
+  creation_token = "devops"
   tags {
     Name = "devops"
   }

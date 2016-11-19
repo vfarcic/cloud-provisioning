@@ -1,6 +1,6 @@
 resource "aws_instance" "base" {
   ami = "${var.base_ami_id}"
-  instance_type = "${var.base.instance_type}"
+  instance_type = "${var.base["instance_type"]}"
   tags {
     Name = "base"
   }
@@ -14,7 +14,7 @@ resource "aws_instance" "base" {
   key_name = "devops"
   connection {
     user = "ubuntu"
-    private_key = "${file("devops.pem")}"
+    private_key = "${file("devops21.pem")}"
   }
   provisioner "remote-exec" {
     inline = [
