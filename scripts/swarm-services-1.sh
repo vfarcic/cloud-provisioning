@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-eval $(docker-machine env swarm-1)
-
 docker network create --driver overlay proxy
 
 docker network create --driver overlay go-demo
@@ -40,11 +38,6 @@ docker service create --name go-demo \
     --label com.df.servicePath=/demo \
     --label com.df.port=8080 \
     vfarcic/go-demo:1.2
-
-docker service create --name util \
-    --network proxy \
-    --mode global \
-    alpine sleep 1000000000
 
 echo ""
 echo ">> The services scheduled and will be up-and-running soon"
