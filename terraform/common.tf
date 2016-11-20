@@ -61,3 +61,15 @@ resource "aws_security_group" "docker" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 }
+
+resource "aws_eip" "docker" {
+  vpc = true
+  instance                  = "${aws_instance.swarm-init.id}"
+  depends_on = [
+    "aws_instance.swarm-init"
+  ]
+}
+
+output "eip_ip" {
+  value = "${aws_eip.docker.public_ip}"
+}
