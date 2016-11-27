@@ -22,10 +22,30 @@ docker service create --name swarm-listener \
     --constraint 'node.role==manager' \
     vfarcic/docker-flow-swarm-listener
 
+while true; do
+    REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
+    if [[ $REPLICAS == "3/3" ]]; then
+        break
+    else
+        echo "Waiting for the proxy service..."
+        sleep 10
+    fi
+done
+
 docker service create --name go-demo-db \
     --reserve-memory 100m \
     --network go-demo \
     mongo:3.2.10
+
+while true; do
+    REPLICAS=$(docker service ls | grep go-demo-db | awk '{print $3}')
+    if [[ $REPLICAS == "1/1" ]]; then
+        break
+    else
+        echo "Waiting for the go-demo-db service..."
+        sleep 10
+    fi
+done
 
 docker service create --name go-demo \
     -e DB=go-demo-db \

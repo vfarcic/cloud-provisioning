@@ -1,14 +1,16 @@
 {
-  "variables": {
-    "aws_access_key": "",
-    "aws_secret_key": ""
-  },
   "builders": [{
     "type": "amazon-ebs",
-    "access_key": "{{user `aws_access_key`}}",
-    "secret_key": "{{user `aws_secret_key`}}",
     "region": "us-east-1",
-    "source_ami": "ami-01d08316",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "paravirtual",
+        "name": "*ubuntu-xenial-16.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
     "instance_type": "t1.micro",
     "ssh_username": "ubuntu",
     "ami_name": "devops21",
@@ -17,7 +19,6 @@
   "provisioners": [{
     "type": "shell",
     "inline": [
-      "sleep 30",
       "sudo apt-get update",
       "sudo apt-get install -y apt-transport-https ca-certificates nfs-common",
       "sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D",

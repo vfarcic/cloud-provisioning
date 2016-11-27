@@ -6,8 +6,6 @@
 secret-*
 *.tfstate.backup
 *.pem
-*.log
-*.tfstate
 *.retry
 /go-demo
 /docker
