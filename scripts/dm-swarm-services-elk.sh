@@ -12,7 +12,8 @@ docker service create --name elasticsearch \
 
 while true; do
     REPLICAS=$(docker service ls | grep elasticsearch | awk '{print $3}')
-    if [[ $REPLICAS == "1/1" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep elasticsearch | awk '{print $4}')
+    if [[ $REPLICAS == "1/1" || $REPLICAS_NEW == "1/1" ]]; then
         break
     else
         echo "Waiting for the elasticsearch service..."
@@ -33,7 +34,8 @@ docker service create --name logstash \
 
 while true; do
     REPLICAS=$(docker service ls | grep logstash | awk '{print $3}')
-    if [[ $REPLICAS == "1/1" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep logstash | awk '{print $4}')
+    if [[ $REPLICAS == "1/1" || $REPLICAS_NEW == "1/1" ]]; then
         break
     else
         echo "Waiting for the logstash service..."
@@ -61,7 +63,8 @@ docker service create --name proxy \
 
 while true; do
     REPLICAS=$(docker service ls | grep swarm-listener | awk '{print $3}')
-    if [[ $REPLICAS == "1/1" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep swarm-listener | awk '{print $4}')
+    if [[ $REPLICAS == "1/1" || $REPLICAS_NEW == "1/1" ]]; then
         break
     else
         echo "Waiting for the swarm-listener service..."
@@ -71,7 +74,8 @@ done
 
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
-    if [[ $REPLICAS == "1/1" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep proxy | awk '{print $4}')
+    if [[ $REPLICAS == "1/1" || $REPLICAS_NEW == "1/1" ]]; then
         break
     else
         echo "Waiting for the proxy service..."

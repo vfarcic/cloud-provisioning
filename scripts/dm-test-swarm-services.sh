@@ -46,7 +46,8 @@ docker service create --name go-demo-db \
 
 while true; do
     REPLICAS=$(docker service ls | grep proxy | awk '{print $3}')
-    if [[ $REPLICAS == "2/2" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep proxy | awk '{print $4}')
+    if [[ $REPLICAS == "2/2" || $REPLICAS_NEW == "2/2" ]]; then
         break
     else
         echo "Waiting for the proxy service..."
@@ -56,7 +57,8 @@ done
 
 while true; do
     REPLICAS=$(docker service ls | grep go-demo-db | awk '{print $3}')
-    if [[ $REPLICAS == "1/1" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep go-demo-db | awk '{print $4}')
+    if [[ $REPLICAS == "1/1" || $REPLICAS_NEW == "1/1" ]]; then
         break
     else
         echo "Waiting for the go-demo-db service..."
@@ -75,7 +77,8 @@ docker service create --name go-demo \
 
 while true; do
     REPLICAS=$(docker service ls | grep vfarcic/go-demo | awk '{print $3}')
-    if [[ $REPLICAS == "2/2" ]]; then
+    REPLICAS_NEW=$(docker service ls | grep vfarcic/go-demo | awk '{print $4}')
+    if [[ $REPLICAS == "2/2" || $REPLICAS_NEW == "2/2" ]]; then
         break
     else
         echo "Waiting for the go-demo-db service..."
