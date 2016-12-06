@@ -1,0 +1,31 @@
+{
+  "builders": [{
+    "type": "amazon-ebs",
+    "region": "us-east-1",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "paravirtual",
+        "name": "*ubuntu-xenial-16.04-amd64-server-*",
+        "root-device-type": "ebs"
+      },
+      "owners": ["099720109477"],
+      "most_recent": true
+    },
+    "instance_type": "t1.micro",
+    "ssh_username": "ubuntu",
+    "ami_name": "devops21",
+    "force_deregister": true
+  }],
+  "provisioners": [{
+    "type": "shell",
+    "inline": [
+      "sudo apt-get update",
+      "sudo apt-get install -y apt-transport-https ca-certificates nfs-common",
+      "sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D",
+      "echo 'deb https://apt.dockerproject.org/repo ubuntu-xenial main' | sudo tee /etc/apt/sources.list.d/docker.list",
+      "sudo apt-get update",
+      "sudo apt-get install -y docker-engine",
+      "sudo usermod -aG docker ubuntu"
+    ]
+  }]
+}
