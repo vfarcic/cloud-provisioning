@@ -43,6 +43,7 @@ resource "aws_instance" "swarm-worker" {
     ]
   }
 }
+
 output "swarm_manager_1_public_ip" {
   value = "${aws_instance.swarm-manager.0.public_ip}"
 }
