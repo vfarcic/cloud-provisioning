@@ -4,7 +4,7 @@ variable "swarm_manager_token" {
 variable "swarm_worker_token" {
   default = ""
 }
-variable "swarm_image" {
+variable "swarm_image_id" {
   default = "unknown"
 }
 variable "swarm_manager_ip" {

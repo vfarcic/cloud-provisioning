@@ -3,7 +3,7 @@
 .vagrant
 /packer/*.env
 /packer/packer_cache
-secret-*
+secrets*
 *.tfstate.backup
 *.pem
 *.retry

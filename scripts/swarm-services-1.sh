@@ -62,4 +62,4 @@ docker service create --name go-demo \
     vfarcic/go-demo:1.2
 
 echo ""
-echo ">> The services scheduled and will be up-and-running soon"
+echo ">> The scheduled will be up-and-running soon"

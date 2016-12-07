@@ -38,7 +38,6 @@ resource "aws_instance" "swarm-worker" {
   }
   provisioner "remote-exec" {
     inline = [
-      "echo \"docker swarm join --token ${var.swarm_worker_token} --advertise-addr ${self.private_ip} ${var.swarm_manager_ip}:2377\"",
       "docker swarm join --token ${var.swarm_worker_token} --advertise-addr ${self.private_ip} ${var.swarm_manager_ip}:2377"
     ]
   }
