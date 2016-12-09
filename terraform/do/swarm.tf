@@ -1,9 +1,9 @@
 resource "digitalocean_droplet" "swarm-manager" {
+  image = "${var.swarm_snapshot_id}"
+  size = "${var.swarm_instance_size}"
   count = "${var.swarm_managers}"
-  image = "${var.swarm_image_id}"
   name = "${format("swarm-manager-%02d", (count.index + 1))}"
   region = "${var.swarm_region}"
-  size = "${var.swarm_instance_size}"
   private_networking = true
   ssh_keys = [
     "${digitalocean_ssh_key.docker.id}"
@@ -22,11 +22,11 @@ resource "digitalocean_droplet" "swarm-manager" {
 }
 
 resource "digitalocean_droplet" "swarm-worker" {
+  image = "${var.swarm_snapshot_id}"
+  size = "${var.swarm_instance_size}"
   count = "${var.swarm_workers}"
-  image = "${var.swarm_image_id}"
   name = "${format("swarm-worker-%02d", (count.index + 1))}"
   region = "${var.swarm_region}"
-  size = "${var.swarm_instance_size}"
   private_networking = true
   ssh_keys = [
     "${digitalocean_ssh_key.docker.id}"

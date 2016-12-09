@@ -13,6 +13,7 @@ docker service create --name proxy \
     --network proxy \
     --replicas 3 \
     -e MODE=swarm \
+    -e LISTENER_ADDRESS=swarm-listener \
     vfarcic/docker-flow-proxy
 
 docker service create --name swarm-listener \
