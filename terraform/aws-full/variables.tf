@@ -28,3 +28,12 @@ variable "swarm_init" {
 variable "rexray" {
   default = false
 }
+variable "ci_ami_id" {
+  default = "unknown"
+}
+variable "ci_instance_type" {
+  default = "m3.medium"
+}
+variable "ci_count" {
+  default = 0
+}
