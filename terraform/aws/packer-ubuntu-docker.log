@@ -1,0 +1,41 @@
+1481297881,,ui,say,amazon-ebs output will be in this color.
+1481297881,,ui,say,
+1481297881,,ui,say,==> amazon-ebs: Force Deregister flag found%!(PACKER_COMMA) skipping prevalidating AMI Name
+1481297884,,ui,message,    amazon-ebs: Found Image ID: ami-26d6d131
+1481297884,,ui,say,==> amazon-ebs: Creating temporary keypair: packer_584acfd9-6b6e-a50a-5e26-e3fffeacdc82
+1481297884,,ui,say,==> amazon-ebs: Creating temporary security group for this instance...
+1481297884,,ui,say,==> amazon-ebs: Authorizing access to port 22 the temporary security group...
+1481297885,,ui,say,==> amazon-ebs: Launching a source AWS instance...
+1481297886,,ui,message,    amazon-ebs: Instance ID: i-016898f034e799e75
+1481297886,,ui,say,==> amazon-ebs: Waiting for instance (i-016898f034e799e75) to become ready...
+1481297911,,ui,say,==> amazon-ebs: Waiting for SSH to become available...
+1481297966,,ui,say,==> amazon-ebs: Connected to SSH!
+1481297966,,ui,say,==> amazon-ebs: Provisioning with shell script: /var/folders/99/kb65vfkd6_5_qxn5_0w4f9pr0000gn/T/packer-shell398579649
+1481297968,,ui,message,    amazon-ebs: Hit:1 http://archive.ubuntu.com/ubuntu xenial InRelease
+1481297968,,ui,message,    amazon-ebs: Get:2 http://security.ubuntu.com/ubuntu xenial-security InRelease [102 kB]
+1481297968,,ui,message,    amazon-ebs: Get:3 http://archive.ubuntu.com/ubuntu xenial-updates InRelease [102 kB]
+1481297969,,ui,message,    amazon-ebs: Get:4 http://security.ubuntu.com/ubuntu xenial-security/main amd64 Packages [189 kB]
+1481297969,,ui,message,    amazon-ebs: Get:5 http://archive.ubuntu.com/ubuntu xenial-updates/main amd64 Packages [440 kB]
+1481297969,,ui,message,    amazon-ebs: Get:6 http://security.ubuntu.com/ubuntu xenial-security/main Translation-en [77.7 kB]
+1481297970,,ui,message,    amazon-ebs: Get:7 http://security.ubuntu.com/ubuntu xenial-security/universe amd64 Packages [64.5 kB]
+1481297970,,ui,message,    amazon-ebs: Get:8 http://security.ubuntu.com/ubuntu xenial-security/universe Translation-en [35.1 kB]
+1481297970,,ui,message,    amazon-ebs: Get:9 http://archive.ubuntu.com/ubuntu xenial-updates/main Translation-en [171 kB]
+1481297970,,ui,message,    amazon-ebs: Get:10 http://archive.ubuntu.com/ubuntu xenial-updates/restricted amd64 Packages [6%!(PACKER_COMMA)576 B]
+1481297970,,ui,message,    amazon-ebs: Get:11 http://archive.ubuntu.com/ubuntu xenial-updates/restricted Translation-en [2%!(PACKER_COMMA)016 B]
+1481297970,,ui,message,    amazon-ebs: Get:12 http://archive.ubuntu.com/ubuntu xenial-updates/universe amd64 Packages [368 kB]
+1481297970,,ui,message,    amazon-ebs: Get:13 http://archive.ubuntu.com/ubuntu xenial-updates/universe Translation-en [134 kB]
+1481297970,,ui,message,    amazon-ebs: Get:14 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse amd64 Packages [7%!(PACKER_COMMA)384 B]
+1481297970,,ui,message,    amazon-ebs: Get:15 http://archive.ubuntu.com/ubuntu xenial-updates/multiverse Translation-en [2%!(PACKER_COMMA)988 B]
+1481297971,,ui,message,    amazon-ebs: Reading package lists...
+1481297971,,ui,message,    amazon-ebs: E: can not open /var/lib/apt/lists/archive.ubuntu.com_ubuntu_dists_xenial_InRelease - fopen (2: No such file or directory)
+1481297971,,ui,say,==> amazon-ebs: Terminating the source AWS instance...
+1481298017,,ui,say,==> amazon-ebs: Cleaning up any extra volumes...
+1481298017,,ui,say,==> amazon-ebs: No volumes to clean up%!(PACKER_COMMA) skipping
+1481298017,,ui,say,==> amazon-ebs: Deleting temporary security group...
+1481298017,,ui,say,==> amazon-ebs: Deleting temporary keypair...
+1481298018,,ui,error,Build 'amazon-ebs' errored: Script exited with non-zero exit status: 100
+1481298018,,error-count,1
+1481298018,,ui,error,\n==> Some builds didn't complete successfully and had errors:
+1481298018,amazon-ebs,error,Script exited with non-zero exit status: 100
+1481298018,,ui,error,--> amazon-ebs: Script exited with non-zero exit status: 100
+1481298018,,ui,say,\n==> Builds finished but no artifacts were created.

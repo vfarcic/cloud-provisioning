@@ -37,3 +37,21 @@ variable "ci_instance_type" {
 variable "ci_count" {
   default = 0
 }
+variable "test_swarm_managers" {
+  default = 3
+}
+variable "test_swarm_workers" {
+  default = 2
+}
+variable "test_swarm_instance_type" {
+  default = "t1.micro"
+}
+variable "test_swarm_manager_token" {
+  default = ""
+}
+variable "test_swarm_worker_token" {
+  default = ""
+}
+variable "test_swarm_manager_ip" {
+  default = ""
+}
