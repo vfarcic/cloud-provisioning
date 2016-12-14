@@ -44,7 +44,7 @@ variable "test_swarm_workers" {
   default = 2
 }
 variable "test_swarm_instance_type" {
-  default = "t1.micro"
+  default = "m3.medium"
 }
 variable "test_swarm_manager_token" {
   default = ""
