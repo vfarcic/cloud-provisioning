@@ -28,6 +28,9 @@ variable "swarm_init" {
 variable "rexray" {
   default = false
 }
+variable "efs" {
+  default = false
+}
 variable "ci_ami_id" {
   default = "unknown"
 }

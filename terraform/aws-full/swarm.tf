@@ -31,7 +31,7 @@ resource "aws_instance" "swarm-worker" {
     Name = "swarm-worker"
   }
   vpc_security_group_ids = [
-    "${aws_security_group.docker.id}"
+    "${aws_security_group.docker.id}",
   ]
   key_name = "devops21"
   connection {
