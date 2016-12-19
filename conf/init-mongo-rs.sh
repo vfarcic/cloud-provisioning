@@ -9,11 +9,15 @@ for rs in "$@"; do
     done
 done
 
+i=0
 for rs in "$@"; do
     if [ "$rs" != "$1" ]; then
         MEMBERS="$MEMBERS ,"
     fi
-    MEMBERS="$MEMBERS {_id: 0, host: \"$rs\" }"
+    MEMBERS="$MEMBERS {_id: $i, host: \"$rs\" }"
+    i=$((i+1))
 done
 
-mongo --host go-demo-db-rs1 --eval "rs.initiate({_id: "rs0", version: 1, members: [$MEMBERS]})"
+mongo --host $1 --eval "rs.initiate({_id: \"rs0\", version: 1, members: [$MEMBERS]})"
+sleep 1
+mongo --host $1 --eval 'rs.status()'
