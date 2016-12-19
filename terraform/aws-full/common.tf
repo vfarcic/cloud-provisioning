@@ -136,3 +136,6 @@ data "template_file" "rexray" {
   }
 }
 
+output "security_group_id" {
+  value = "${aws_security_group.docker.id}"
+}
