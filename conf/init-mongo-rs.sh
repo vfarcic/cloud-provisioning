@@ -19,5 +19,5 @@ for rs in "$@"; do
 done
 
 mongo --host $1 --eval "rs.initiate({_id: \"rs0\", version: 1, members: [$MEMBERS]})"
-sleep 1
+sleep 3
 mongo --host $1 --eval 'rs.status()'

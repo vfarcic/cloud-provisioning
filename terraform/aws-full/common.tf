@@ -108,23 +108,6 @@ resource "aws_security_group" "docker" {
   }
 }
 
-resource "aws_efs_file_system" "docker" {
-  creation_token = "docker"
-  tags {
-    Name = "docker"
-  }
-}
-
-variable "efs_subnet_id" {
-  default = "unknown"
-}
-
-resource "aws_efs_mount_target" "docker_efs" {
-  file_system_id = "${aws_efs_file_system.docker.id}"
-  subnet_id = "${var.efs_subnet_id}"
-  security_groups = ["${aws_security_group.docker.id}"]
-}
-
 data "template_file" "rexray" {
   template = "${file("rexray.tpl")}"
 
