@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 
 for i in 1 2 3; do
-    docker-machine create -d virtualbox swarm-test-$i
+    docker-machine create \
+        -d virtualbox \
+        --virtualbox-memory 512 \
+        swarm-test-$i
 done
 
 eval $(docker-machine env swarm-test-1)
