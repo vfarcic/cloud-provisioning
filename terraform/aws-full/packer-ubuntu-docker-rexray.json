@@ -36,6 +36,7 @@
   }, {
     "type": "shell",
     "inline": [
+      "sleep 15",
       "sudo mv /tmp/docker.service /lib/systemd/system/docker.service",
       "sudo chmod 644 /lib/systemd/system/docker.service",
       "sudo systemctl daemon-reload",

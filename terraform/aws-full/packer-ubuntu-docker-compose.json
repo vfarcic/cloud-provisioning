@@ -19,6 +19,7 @@
   "provisioners": [{
     "type": "shell",
     "inline": [
+      "sleep 15",
       "sudo apt-get clean",
       "sudo apt-get update",
       "sudo apt-get install -y apt-transport-https ca-certificates nfs-common",
