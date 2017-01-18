@@ -11,7 +11,7 @@
       "owners": ["099720109477"],
       "most_recent": true
     },
-    "instance_type": "t1.micro",
+    "instance_type": "t2.micro",
     "ssh_username": "ubuntu",
     "ami_name": "devops21",
     "force_deregister": true
