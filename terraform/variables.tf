@@ -17,7 +17,7 @@ variable "swarm_workers" {
   default = 2
 }
 variable "swarm_instance_type" {
-  default = "t1.micro"
+  default = "t2.micro"
 }
 variable "swarm_init" {
   default = false
