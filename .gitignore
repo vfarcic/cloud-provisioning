@@ -10,3 +10,5 @@ secrets*
 /go-demo
 /docker
 /docker*.tgz
+/terraform/do/devops21-do*
+/terraform/do/graph.png
