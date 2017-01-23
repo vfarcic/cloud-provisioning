@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+export MSYS_NO_PATHCONV=1
+
 eval $(docker-machine env swarm-1)
 
 docker network create --driver overlay elk
