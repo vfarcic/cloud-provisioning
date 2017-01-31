@@ -119,6 +119,14 @@ data "template_file" "rexray" {
   }
 }
 
+resource "aws_eip" "swarm" {
+  instance = "${aws_instance.swarm-manager.0.id}"
+}
+
 output "security_group_id" {
   value = "${aws_security_group.docker.id}"
+}
+
+output "eip" {
+  value = "${aws_eip.swarm.public_ip}"
 }
