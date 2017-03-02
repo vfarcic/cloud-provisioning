@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 for i in 1 2 3; do
-    VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD" \
     docker-machine create \
         -d virtualbox \
         --virtualbox-memory 512 \

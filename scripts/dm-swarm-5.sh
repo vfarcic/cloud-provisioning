@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 for i in {1..5}; do
-    VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD" \
     docker-machine create \
         -d virtualbox \
         swarm-$i
