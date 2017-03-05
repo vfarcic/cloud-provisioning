@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [[ "$(uname -s )" == "Linux" ]]; then
+  export VIRTUALBOX_SHARE_FOLDER="$PWD:$PWD"
+fi
+
 for i in {1..5}; do
     docker-machine create \
         -d virtualbox \
