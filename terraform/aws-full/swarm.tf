@@ -70,4 +70,3 @@ output "swarm_manager_3_public_ip" {
 output "swarm_manager_3_private_ip" {
   value = "${aws_instance.swarm-manager.2.private_ip}"
 }
-
