@@ -33,37 +33,51 @@ node("docker") {
 
     stage("Prod-like") {
       withEnv([
-        "DOCKER_TLS_VERIFY=1",
-        "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2376",
-        "DOCKER_CERT_PATH=/machines/${env.PROD_LIKE_NAME}"
+              "DOCKER_TLS_VERIFY=1",
+              "DOCKER_HOST=tcp://${env.PROD_LIKE_IP}:2376",
+              "DOCKER_CERT_PATH=/machines/${env.PROD_LIKE_NAME}"
       ]) {
         sh "docker service update \
-          --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} \
-          go-demo"
+      --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} \
+      go-demo"
       }
       withEnv(["HOST_IP=localhost"]) {
-        for (i = 0; i <10; i++) {
-          sh "docker-compose run --rm production"
+        try {
+          for (i = 0; i <10; i++) {
+            sh "docker-compose run --rm production"
+          }
+        } catch (e) {
+          sh "docker service update --rollback go-demo"
         }
       }
     }
 
     stage("Production") {
       withEnv([
-        "DOCKER_TLS_VERIFY=1",
-        "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
-        "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
+              "DOCKER_TLS_VERIFY=1",
+              "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
+              "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
       ]) {
         sh "docker service update \
-          --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} \
-          go-demo"
+      --image localhost:5000/go-demo:2.${env.BUILD_NUMBER} \
+      go-demo"
       }
-      withEnv(["HOST_IP=${env.PROD_IP}"]) {
-        for (i = 0; i <10; i++) {
-          sh "docker-compose run --rm production"
+      try {
+        withEnv(["HOST_IP=${env.PROD_IP}"]) {
+          for (i = 0; i <10; i++) {
+            sh "docker-compose run --rm production"
+          }
+        }
+      } catch (e) {
+        withEnv([
+                "DOCKER_TLS_VERIFY=1",
+                "DOCKER_HOST=tcp://${env.PROD_IP}:2376",
+                "DOCKER_CERT_PATH=/machines/${env.PROD_NAME}"
+        ]) {
+          sh "docker service update --rollback go-demo"
         }
       }
-
     }
+
   }
 }
