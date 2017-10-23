@@ -27,8 +27,12 @@ mkdir -p docker/logstash
 
 cp conf/logstash.conf docker/logstash/logstash.conf
 
+docker-machine scp -r docker/logstash swarm-1:/home/docker/logstash
+docker-machine scp -r docker/logstash swarm-2:/home/docker/logstash
+docker-machine scp -r docker/logstash swarm-3:/home/docker/logstash
+
 docker service create --name logstash \
-    --mount "type=bind,source=$PWD/docker/logstash,target=/conf" \
+    --mount "type=bind,source=/home/docker/logstash,target=/conf" \
     --network elk \
     -e LOGSPOUT=ignore \
     --reserve-memory 100m \
