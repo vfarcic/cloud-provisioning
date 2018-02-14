@@ -27,7 +27,7 @@
       "sudo apt-get update",
       "sudo apt-get install -y docker-ce",
       "sudo usermod -aG docker ubuntu",
-      "curl -sSL https://dl.bintray.com/emccode/rexray/install | sh -s -- stable"
+      "curl -sSL https://dl.bintray.com/emccode/rexray/install | sh -s -- stable 0.6.3"
     ]
   }, {
     "type": "file",

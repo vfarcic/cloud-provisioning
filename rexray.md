@@ -1,7 +1,7 @@
 # Binary
 
 ```bash
-~ $ curl -sSL https://dl.bintray.com/emccode/rexray/install | sh -s stable
+~ $ curl -sSL https://dl.bintray.com/emccode/rexray/install | sh -s stable 0.6.3
 sudo: unable to execute /usr/bin/rexray: No such file or directory
 
 rexray has been installed to /usr/bin/rexray
