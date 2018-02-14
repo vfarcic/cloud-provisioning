@@ -23,7 +23,7 @@ docker service create --name swarm-listener \
 
 docker service create --name jenkins \
     -e JENKINS_OPTS="--prefix=/jenkins" \
-    --mount "type=volume,source=jenkins,target=/var/jenkins_home,volume-driver=rexray" \
+    --mount "type=volume,source=jenkins,target=/var/jenkins_home,volume-driver=rexray/efs" \
     --label com.df.notify=true \
     --label com.df.distribute=true \
     --label com.df.servicePath=/jenkins \

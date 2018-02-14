@@ -15,4 +15,4 @@ services:
 
 volumes:
   main:
-    driver: rexray
+    driver: rexray/efs
