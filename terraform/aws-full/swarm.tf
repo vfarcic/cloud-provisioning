@@ -17,8 +17,7 @@ resource "aws_instance" "swarm-manager" {
     inline = [
       "if ${var.swarm_init}; then docker swarm init --advertise-addr ${self.private_ip}; fi",
       "if ! ${var.swarm_init}; then docker swarm join --token ${var.swarm_manager_token} --advertise-addr ${self.private_ip} ${var.swarm_manager_ip}:2377; fi",
-      "if ${var.rexray}; then echo \"${data.template_file.rexray.rendered}\" | sudo tee /etc/rexray/config.yml; fi",
-      "if ${var.rexray}; then sudo rexray service start >/dev/null 2>/dev/null; fi"
+      "if ${var.rexray}; then docker plugin install rexray/efs  --grant-all-permissions EFS_ACCESSKEY=${var.aws_access_key} EFS_SECRETKEY=${var.aws_secret_key} EFS_REGION=${var.aws_default_region} EFS_SECURITYGROUPS=${aws_security_group.docker.id} EFS_TAG=\"rexray\";  fi"
     ]
   }
 }
@@ -41,8 +40,7 @@ resource "aws_instance" "swarm-worker" {
   provisioner "remote-exec" {
     inline = [
       "docker swarm join --token ${var.swarm_worker_token} --advertise-addr ${self.private_ip} ${var.swarm_manager_ip}:2377",
-      "if ${var.rexray}; then echo \"${data.template_file.rexray.rendered}\" | sudo tee /etc/rexray/config.yml; fi",
-      "if ${var.rexray}; then sudo rexray service start >/dev/null 2>/dev/null; fi"
+      "if ${var.rexray}; then docker plugin install rexray/efs  --grant-all-permissions EFS_ACCESSKEY=${var.aws_access_key} EFS_SECRETKEY=${var.aws_secret_key} EFS_REGION=${var.aws_default_region} EFS_SECURITYGROUPS=${aws_security_group.docker.id} EFS_TAG=\"rexray\";  fi"
     ]
   }
 }
