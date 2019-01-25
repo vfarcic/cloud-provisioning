@@ -4,7 +4,7 @@ services:
 
   jenkins:
     container_name: jenkins
-    image: jenkins:alpine
+    image: jenkins/jenkins:2.161-alpine
     ports:
       - 80:8080
       - 50000:50000

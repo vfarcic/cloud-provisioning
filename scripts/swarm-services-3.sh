@@ -30,7 +30,7 @@ docker service create --name jenkins \
     --label com.df.port=8080 \
     --network proxy \
     --reserve-memory 300m \
-    jenkins:2.7.4-alpine
+    jenkins/jenkins:2.161-alpine
 
 echo ""
 echo ">> The scheduled services will be up-and-running soon"

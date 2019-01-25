@@ -1,4 +1,4 @@
-FROM jenkins:alpine
+FROM jenkins/jenkins:2.161-alpine
 
 ENV JENKINS_OPTS --prefix=/jenkins
 
